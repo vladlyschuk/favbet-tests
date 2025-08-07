@@ -1,0 +1,76 @@
+name: Playwright Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  cross-browser-tests:
+    name: Cross-Browser Tests (Parallel)
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Install Playwright browsers
+      run: npx playwright install --with-deps
+
+    - name: Run tests across all browsers (parallel)
+      id: playwright-tests
+      run: npm run test
+      continue-on-error: false
+
+    - name: Upload cross-browser test artifacts
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: cross-browser-report-${{ github.run_number }}
+        path: |
+          playwright-report/
+          test-results/
+        retention-days: 30
+
+    - name: Create test summary
+      if: always()
+      run: |
+        if [ "${{ steps.playwright-tests.outcome }}" == "success" ]; then
+          echo "## ✅ Cross-Browser Test Results (Parallel)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "🎉 **All tests passed!**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Tests ran successfully across:" >> $GITHUB_STEP_SUMMARY
+          echo "- 🟦 **Chromium** (Chrome, Edge)" >> $GITHUB_STEP_SUMMARY
+          echo "- 🟧 **Firefox**" >> $GITHUB_STEP_SUMMARY  
+          echo "- 🟪 **WebKit** (Safari)" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "## ❌ Cross-Browser Test Results (Parallel)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "🚨 **Some tests failed!**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Tests were executed across:" >> $GITHUB_STEP_SUMMARY
+          echo "- 🟦 **Chromium** (Chrome, Edge)" >> $GITHUB_STEP_SUMMARY
+          echo "- 🟧 **Firefox**" >> $GITHUB_STEP_SUMMARY  
+          echo "- 🟪 **WebKit** (Safari)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📊 Check the uploaded test report artifacts for detailed results." >> $GITHUB_STEP_SUMMARY
+        fi
+
+    - name: Fail pipeline on test failure
+      if: steps.playwright-tests.outcome == 'failure'
+      run: |
+        echo "❌ Tests failed - marking pipeline as failed"
+        exit 1
