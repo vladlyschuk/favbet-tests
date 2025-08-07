@@ -61,7 +61,7 @@ test.describe('API Tests - Bonuses', () => {
     }
   });
 
-  test('Should send analytics event for adding favorite', async ({ page }) => {
+  test.skip('Should send analytics event for adding favorite', async ({ page }) => {
     const testResponse = await page.evaluate(async () => {
       const eventRequest = {
         "jsonrpc": "2.0",

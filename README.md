@@ -69,9 +69,18 @@ Reports are generated in:
 - `playwright-report/` - HTML reports with detailed test execution data
 - `test-results/` - JSON results and video recordings
 
+## 🎥 Test Evidence & Video Recordings
+
+#### UI Test Execution Video
+
+![Test 1](docs/videos/UI_TEST_1.webm)
+![Test 2](docs/videos/UI_TEST_2.webm)
+![Test 3](docs/videos/UI_TEST_3.webm)
+
+
 ## 🏗️ Project Structure
 
-```
+```text
 favbet-tests/
 ├── src/
 │   ├── builders/        # API request builders

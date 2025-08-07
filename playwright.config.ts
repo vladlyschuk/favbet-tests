@@ -27,7 +27,7 @@ export default defineConfig({
     actionTimeout: 60000,
     navigationTimeout: 60000,
     testIdAttribute: 'data-role',
-    headless: false,
+    headless: true,
     ignoreHTTPSErrors: true,
   },
 

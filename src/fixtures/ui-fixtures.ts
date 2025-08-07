@@ -37,7 +37,7 @@ test.beforeEach(async ({ page, loginPage }) => {
     process.env.TEST_USER_EMAIL || 'temidal533@efpaper.com',
     process.env.TEST_USER_PASSWORD || 'Password1'
   );
-   await page.context().storageState({ path: 'auth-state.json' });
+  await page.context().storageState({ path: 'auth-state.json' });
 });
 
 export { expect } from '@playwright/test';
