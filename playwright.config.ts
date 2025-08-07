@@ -5,10 +5,10 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export default defineConfig({
-  testDir: './tests',
+  testDir: './tests/ui',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 1 : 0,
   workers: process.env.HEADLESS ? 1 : 1,
   timeout: 700000,
   expect: {
@@ -26,11 +26,8 @@ export default defineConfig({
     video: 'on',
     actionTimeout: 60000,
     navigationTimeout: 60000,
-    // Кастомный селектор для testId - используем data-role вместо data-testid
     testIdAttribute: 'data-role',
-    // Full screen browser settings
-    // For development - run in headed mode
-    headless: process.env.HEADLESS !== 'false',
+    headless: false,
     ignoreHTTPSErrors: true,
   },
 
