@@ -4,25 +4,18 @@
   "description": "Automated test suite for Favbet using Playwright and TypeScript",
   "main": "index.js",
   "scripts": {
-    "test": "playwright test",
-    "test:ui": "playwright test tests/ui",
-    "test:api": "playwright test tests/api",
-    "test:headed": "playwright test --headed",
-    "test:debug": "playwright test --debug",
-    "report": "playwright show-report",
+    "test": "npx playwright test",
+    "test:ui": "npx playwright test tests/ui",
+    "test:api": "npx playwright test tests/api",
+    "test:headed": "npx playwright test --headed",
+    "test:debug": "npx playwright test --debug",
+    "report": "npx playwright show-report",
     "lint": "eslint src/ --ext .ts",
     "lint:fix": "eslint src/ --ext .ts --fix",
     "format": "prettier --write src/ tests/",
-    "install:browsers": "playwright install"
+    "install:browsers": "npx playwright install"
   },
-  "keywords": [
-    "playwright",
-    "typescript",
-    "testing",
-    "favbet",
-    "automation"
-  ],
-  "author": "Test Automation Team",
+  "author": "V. L.",
   "license": "MIT",
   "devDependencies": {
     "@playwright/test": "^1.40.0",
