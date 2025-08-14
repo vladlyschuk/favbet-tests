@@ -54,7 +54,7 @@ export class LivePage extends BasePage {
         const eventId = await eventContainer.getAttribute('data-role');
         const matchId = eventId?.replace('event-id-', '') || `match-${i + 1}`;
         const participantsContainer = eventContainer.locator('[data-role*="event-participants-name"]');
-        const teamElements = participantsContainer.locator('.Qo3Gx span');
+        const teamElements = participantsContainer.locator('.Qo3Gx span'); // need to refactor this locator
         
         let homeTeam = '';
         let awayTeam = '';

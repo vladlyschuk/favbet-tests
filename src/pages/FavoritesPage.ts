@@ -3,7 +3,6 @@ import { BasePage } from './BasePage';
 
 export class FavoritesPage extends BasePage {
   private readonly favoritesLink: Locator;
-  private readonly matchesContainer: Locator;
   private readonly eventContainers: Locator;
 
   constructor(page: Page) {
@@ -11,7 +10,6 @@ export class FavoritesPage extends BasePage {
     
     this.favoritesLink = this.page.getByText('Обране', { exact: true });
     this.eventContainers = this.page.locator('[data-role^="event-id-"]');
-    this.matchesContainer = this.page.locator('div').filter({ has: this.eventContainers });
   }
 
   async navigateToFavorites(): Promise<void> {
@@ -41,7 +39,7 @@ export class FavoritesPage extends BasePage {
     const maxAttempts = 10;
     
     while (currentCount >= expectedCount && attempts < maxAttempts) {
-      await this.page.waitForTimeout(200); // Короткая пауза
+      await this.page.waitForTimeout(200);
       currentCount = await this.eventContainers.count();
       attempts++;
     }

@@ -7,7 +7,6 @@ export abstract class BaseComponent {
     this.page = page;
   }
 
-  // Базовые методы для всех компонентов
   async waitForElement(locator: Locator, timeout: number = 5000): Promise<boolean> {
     try {
       await locator.waitFor({ state: 'visible', timeout });
